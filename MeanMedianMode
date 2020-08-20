@@ -1,0 +1,67 @@
+import java.io.*;
+import java.util.*;
+import java.lang.Math;
+import java.util.Arrays;
+public class MeanMedianMode {
+
+	public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        Scanner in = new Scanner(System.in);
+        int n=in.nextInt();
+        int[] a= new int[n];
+        double sum =0.0 ;
+        HashMap<Integer,Integer> hshMap = new HashMap<>();
+        for(int i=0;i<n;i++)
+        {
+            a[i]=in.nextInt();
+            sum+=a[i];
+            int count=(hshMap.isEmpty()||hshMap.get(a[i])==null)?1:(hshMap.get(a[i]) +1);
+            hshMap.put(a[i],count);
+        }
+        in.close();
+        double mean = sum/n;
+        System.out.println(mean);
+      
+        System.out.println(getMedian(a, n));
+        System.out.println(getMode(a, hshMap));
+        
+
+    }
+    public static double getMedian(int a[],int n)
+    {
+        double median=0.0;
+        int mid=n/2;
+        Arrays.sort(a);
+        if(n%2==0)
+        {
+            median =(double) (a[mid-1]+a[mid])/2;
+        }
+        else{
+            median=(double)a[mid];
+        }
+        return  median;
+    }
+    public static int getMode(int a[],Map<Integer,Integer> hshMap)
+    {
+        int occurence = 0;
+        int mode=0;
+        for(Integer key:hshMap.keySet())
+        {
+            int valOcuurence=hshMap.get(key);
+            if(occurence==valOcuurence &&  key<mode)
+            {
+                occurence=valOcuurence;
+                mode=key;
+            }
+            else if(occurence<valOcuurence)
+            {
+                occurence=valOcuurence;
+                mode=key;
+            }
+        }
+        return mode;
+    }
+ 
+
+    
+}
